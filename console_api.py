@@ -52,3 +52,4 @@ def competition_name(competition_id):
 
 if __name__ == '__main__':
     main()
+    
