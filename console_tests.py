@@ -1,5 +1,6 @@
 import http.client
 import json
+from prettytable import PrettyTable
 
 
 def main():
@@ -10,15 +11,12 @@ def main():
         connection.request('GET', '/v1/competitions/' + competition_id + '/leagueTable', None, headers)
         response = json.loads(connection.getresponse().read().decode())
 
-        print("_____________________________________________")
         print("%s Latest Table Standings " % competition_name(competition_id))
-        print("_____________________________________________")
 
-        #print("# /t Team /t Played /t GD /t PTS")
-        standings = []
+        my_table = PrettyTable(['#', 'Team', 'Played', 'GD', 'PTS'])
         for team in response['standing']:
-            standings.append([team['rank'], team['team'], team['playedGames'], team['goalDifference'], team['points']])
-        print(standings)
+            my_table.add_row([team['rank'], team['team'], team['playedGames'], team['goalDifference'], team['points']])
+        print(my_table)
     except Exception as e:
         print(type(e))
         print(e)
