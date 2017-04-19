@@ -1,3 +1,16 @@
+"""
+    This console application consumes the api.football-data.org api.
+    It uses the information supplied by the api in json format to beautifully generate the current premier league standings.
+    However, you can pass any other leagues by passing their competition ids.
+    Examples are:
+    Premier league = 426
+    Championship = 427
+    League One = 428
+    Bundesliga = 430
+    Serie B = 441
+"""
+
+
 import http.client
 import json
 from prettytable import PrettyTable
@@ -12,10 +25,11 @@ def main():
         response = json.loads(connection.getresponse().read().decode())
 
         print("%s Latest Table Standings " % competition_name(competition_id))
-
         my_table = PrettyTable(['#', 'Team', 'Played', 'GD', 'PTS'])
+
         for team in response['standing']:
             my_table.add_row([team['rank'], team['team'], team['playedGames'], team['goalDifference'], team['points']])
+
         print(my_table)
     except Exception as e:
         print(type(e))
